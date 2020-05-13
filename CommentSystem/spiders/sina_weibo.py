@@ -14,6 +14,7 @@ class SinaWeiBoSpider(scrapy.spiders):
     allowed_domains = ["m.weibo.cn"]
 
     def start_requests(self):
+        
         pass
     pass
 
