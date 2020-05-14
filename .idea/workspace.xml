@@ -2,19 +2,14 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="dc01a6f0-5fc9-4d6e-80f5-f3d2d2e09d35" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/CommentSystem/begin.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/CommentSystem/spiders/sina/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/CommentSystem/spiders/sina/weibo_comment.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/CommentSystem/spiders/sina/weibo_user.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/CommentSystem.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/CommentSystem.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CommentSystem/items.py" beforeDir="false" afterPath="$PROJECT_DIR$/CommentSystem/items.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CommentSystem/middlewares.py" beforeDir="false" afterPath="$PROJECT_DIR$/CommentSystem/middlewares.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CommentSystem/pipelines.py" beforeDir="false" afterPath="$PROJECT_DIR$/CommentSystem/pipelines.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CommentSystem/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/CommentSystem/settings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CommentSystem/spiders/sina_weibo.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/CommentSystem/begin.py" beforeDir="false" afterPath="$PROJECT_DIR$/CommentSystem/begin.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CommentSystem/spiders/sina/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/CommentSystem/spiders/sina/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CommentSystem/spiders/sina/weibo_user.py" beforeDir="false" afterPath="$PROJECT_DIR$/CommentSystem/spiders/sina/weibo_user.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -35,24 +30,24 @@
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
-          <entry key="py" value="4" />
+          <entry key="py" value="5" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
-          <entry key="Python" value="4" />
+          <entry key="Python" value="5" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="py" value="127" />
+          <entry key="py" value="153" />
           <entry key="txt" value="6" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="PLAIN_TEXT" value="6" />
-          <entry key="Python" value="127" />
+          <entry key="Python" value="153" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.vcs.git.usages">
@@ -80,20 +75,36 @@
         <entry file="file://$PROJECT_DIR$/.idea/workspace.xml">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="76">
-              <caret line="248" column="12" lean-forward="true" selection-start-line="248" selection-start-column="12" selection-end-line="248" selection-end-column="12" />
+              <caret line="328" column="12" lean-forward="true" selection-start-line="328" selection-start-column="12" selection-end-line="328" selection-end-column="12" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/CommentSystem/begin.py">
-          <provider selected="true" editor-type-id="text-editor" />
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="275">
+              <caret line="11" lean-forward="true" selection-start-line="11" selection-end-line="11" />
+            </state>
+          </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/CommentSystem/items.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="-910" />
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/CommentSystem/spiders/sina/weibo_user.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="470">
+              <caret line="148" lean-forward="true" selection-start-line="148" selection-end-line="148" />
+              <folding>
+                <element signature="e#183#194#0" expanded="true" />
+              </folding>
+            </state>
           </provider>
         </entry>
       </file>
@@ -106,6 +117,11 @@
       </list>
     </option>
   </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>博用户相关</find>
+    </findStrings>
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
@@ -113,6 +129,8 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/CommentSystem/spiders/sina_weibo.py" />
+        <option value="$PROJECT_DIR$/CommentSystem/begin.py" />
+        <option value="$PROJECT_DIR$/CommentSystem/spiders/sina/weibo_user.py" />
       </list>
     </option>
   </component>
@@ -170,6 +188,19 @@
               <item name="" type="442cc68d:ScopeViewTreeModel$RootNode" />
               <item name="CommentSystem" type="9f88c78c:ScopeViewTreeModel$FileNode" />
             </path>
+            <path>
+              <item name="CommentSystem" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
+              <item name="" type="442cc68d:ScopeViewTreeModel$RootNode" />
+              <item name="CommentSystem" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+              <item name="spiders" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+            </path>
+            <path>
+              <item name="CommentSystem" type="3d21c010:ScopeViewTreeModel$ProjectNode" />
+              <item name="" type="442cc68d:ScopeViewTreeModel$RootNode" />
+              <item name="CommentSystem" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+              <item name="spiders" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+              <item name="sina" type="9f88c78c:ScopeViewTreeModel$FileNode" />
+            </path>
           </expand>
           <select />
         </subPane>
@@ -218,6 +249,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1550" height="848" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.25670242" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -269,16 +301,30 @@
     <entry file="file://$PROJECT_DIR$/.idea/workspace.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="76">
-          <caret line="248" column="12" lean-forward="true" selection-start-line="248" selection-start-column="12" selection-end-line="248" selection-end-column="12" />
+          <caret line="328" column="12" lean-forward="true" selection-start-line="328" selection-start-column="12" selection-end-line="328" selection-end-column="12" />
         </state>
       </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/CommentSystem/begin.py">
-      <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/CommentSystem/items.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-910" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CommentSystem/begin.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="275">
+          <caret line="11" lean-forward="true" selection-start-line="11" selection-end-line="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CommentSystem/spiders/sina/weibo_user.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="470">
+          <caret line="148" lean-forward="true" selection-start-line="148" selection-end-line="148" />
+          <folding>
+            <element signature="e#183#194#0" expanded="true" />
+          </folding>
+        </state>
       </provider>
     </entry>
   </component>
