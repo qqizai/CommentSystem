@@ -4,7 +4,7 @@
 # @Author  : qizai
 # @File    : weibo_user.py
 # @Software: PyCharm
-"""微博用户相关的spider，用户信息、用户粉丝、用户关注、微博列表"""
+"""微博用户相关的spider，用户信息、用户粉丝、用户关注、微博内容列表"""
 
 import json
 from scrapy import Request, Spider
