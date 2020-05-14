@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 # @Time    : 2020/5/13 23:08
 # @Author  : qizai
-# @File    : sina_weibo.py
+# @File    : weibo_comment.py
 # @Software: PyCharm
 
 from scrapy import Request, Spider
