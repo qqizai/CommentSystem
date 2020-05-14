@@ -5,17 +5,21 @@
 # @File    : sina_weibo.py
 # @Software: PyCharm
 
-import scrapy
+from scrapy import Request, Spider
 
 
-class SinaWeiBoSpider(scrapy.spiders):
+class SinaWeiBoSpider(Spider):
     name = "sina_weibo"
 
     allowed_domains = ["m.weibo.cn"]
 
+    # https://m.weibo.cn/comments/hotflow?max_id=153274557041735&id=4503524602083108&mid=4503524602083108&max_id_type=0
     def start_requests(self):
-        # https://m.weibo.cn/comments/hotflow?max_id=153274557041735&id=4503524602083108&mid=4503524602083108&max_id_type=0
         pass
+
+    def parse_comment(self):
+        pass
+
     pass
 
 
