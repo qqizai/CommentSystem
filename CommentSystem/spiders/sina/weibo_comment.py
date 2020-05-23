@@ -8,15 +8,23 @@
 import re
 import json
 import copy
+import datetime
 import traceback
 from scrapy import Request, Spider
+from CommentSystem.items import CommentsItem
 
 
 class SinaWeiBoSpider(Spider):
     name = "weibo_comment"
-
     allowed_domains = ["m.weibo.cn"]
+    custom_settings = {
+        "ITEM_PIPELINES": {
+            'CommentSystem.pipelines.MysqlPipeline': 301,
+        }
+    }
+
     comment_url = "https://m.weibo.cn/comments/hotflow?id={id}&mid={mid}&max_id_type={max_id_type}"  # max_id={max_id}&
+    child_url = "https://m.weibo.cn/comments/hotFlowChild?cid={cid}&max_id={max_id}&max_id_type={max_id_type}"
     total = 0
 
     _id = "4505609644905372"
@@ -25,24 +33,14 @@ class SinaWeiBoSpider(Spider):
 
     headers = {
         "User-Agent": "Mozilla/5.0 (Linux; Android 5.1.1; nxt-al10 Build/LYZ28N) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/39.0.0.0 Mobile Safari/537.36 sinablog-android/5.3.2 (Android 5.1.1; zh_CN; huawei nxt-al10/nxt-al10)",
-        "Content-Type": "application/x-www-form-urlencoded; charset=utf-8"
+        "Content-Type": "application/x-www-form-urlencoded; charset=utf-8",
+        # "Host": "passport.weibo.cn",
+        "Origin": "https://passport.weibo.cn",
+        "Accept": "*/*",
+        "Connection": "keep-alive",
+
     }
 
-    cookies = {
-        'XSRF-TOKEN': '7df30a',
-        'MLOGIN': '1',
-        # 'M_WEIBOCN_PARAMS': 'uicode%3D20000174',
-        'WEIBOCN_FROM': '1110006030',  # 1110006030  1110005030
-        '_T_WM': '48384861342',
-        'SUB': "_2A25zxXz6DeRhGeRL6VoS8yvKyzyIHXVRRgSyrDV6PUJbktANLUL-kW1NU1Zt8kioG9zhfjrM4HrtaOujCt0u1jXO",
-        'SUBP': "0033WrSXqPxfM725Ws9jqgMF55529P9D9WWofOfe78QiPRCZNab0b.pw5JpX5K-hUgL.Fozfeon0e0-ceh52dJLoIpjLxK.L1-BLBoeLxK-L1hMLBK2LxK.LBK5L1h-t",
-        'SUHB': "0cS26eqICtNZxs",
-    }
-
-    # https://m.weibo.cn/comments/hotflow?id=4505609644905372&mid=4505609644905372&max_id=142554445903260&max_id_type=0
-    # https://m.weibo.cn/comments/hotflow?id=4503524602083108&mid=4451505240900957&max_id_type=0&max_id=691344884916348
-
-    # https://m.weibo.cn/comments/hotflow?id=4451505240900957&mid=4451505240900957&max_id_type=0
     # https://m.weibo.cn/comments/hotflow?max_id=153274557041735&id=4503524602083108&mid=4503524602083108&max_id_type=0
     def start_requests(self):
         # todo 需要从某个地方接任务，然后开始爬取( 可以是消息队列/数据库 )
@@ -59,40 +57,115 @@ class SinaWeiBoSpider(Spider):
         self.total += 1
         print("total:{} text: {}".format(self.total, response.text))
 
-        matcher = re.findall('(?<=XSRF-TOKEN=)[0-9a-zA-Z]{6,}(?=;)', str(response.headers).replace("XSRF-TOKEN=deleted", ""))
-        print(matcher)
-        print(self.cookies)
-        self.cookies.update({"XSRF-TOKEN": matcher[0]})
-        print(self.cookies)
-        headers = copy.deepcopy(self.headers)
-        headers.update({
-            "XSRF-TOKEN": matcher[0],
-            "X-Requested-With": "XMLHttpRequest",
-            "Sec-Fetch-Mode": "cors",
-            "MWeibo-Pwa": "1",
-            "Referer": "https://m.weibo.cn/detail/{}".format(self._id),
-            "cookie": "_T_WM=48384861342; WEIBOCN_FROM=1110006030; ALF=1592313481; SCF=AmRuUbcLQzW9Si9aNynUXiFYzap67krRIqkXSrRbMZSG5PwROMLt68V1gAKpwAKqCpffBigpy8hk8RHOJ_P1MlM.; SUBP=0033WrSXqPxfM725Ws9jqgMF55529P9D9WWofOfe78QiPRCZNab0b.pw5JpX5K-hUgL.Fozfeon0e0-ceh52dJLoIpjLxK.L1-BLBoeLxK-L1hMLBK2LxK.LBK5L1h-t; SUB=_2A25zxUs4DeRhGeRL6VoS8yvKyzyIHXVRRlVwrDV6PUJbkdAKLVXmkW1NU1Zt8gDwLA1Y0mwyIMoLqK2RSymlAjd3; SUHB=0xnTPJO1xuB0qd; SSOLoginState=1589721960; MLOGIN=1; M_WEIBOCN_PARAMS=oid%3D4505609644905372%26luicode%3D10000011%26lfid%3D100103type%253D1%2526t%253D10%2526q%253D%25E5%2591%25A8%25E6%2589%25AC%25E9%259D%2592%2BP%25E7%2585%25A7%25E7%2589%2587%25E6%2598%25AF%25E7%25BD%2591%25E7%25BA%25A2%25E7%259A%2584%25E5%259F%25BA%25E6%259C%25AC%25E8%2581%258C%25E4%25B8%259A%25E7%25B4%25A0%25E5%2585%25BB%26uicode%3D20000061%26fid%3D4505609644905372; XSRF-TOKEN=c4c9d6",
-        })
+        result = json.loads(response.text.replace("false", "0").replace("true", "1"))
+        if result.get("ok")==1 and result.get("data").get("data"):
+            comments = result.get("data").get("data")
+            max_id = result.get("data").get("max_id")
 
-        try:
-            datas = json.loads(response.text)
-        except Exception as e:
-            print(traceback.format_exc())
-            datas = None
-        if datas and datas["ok"]==1:
-            print(self.comment_url.format(id=self._id, max_id_type=self.max_id_type, mid=self.mid)+"&max_id={}".format(datas["data"]["max_id"]))
+            matcher = re.findall('(?<=XSRF-TOKEN=)[0-9a-zA-Z]{6,}(?=;)', str(response.headers).replace("XSRF-TOKEN=deleted", ""))
+            headers = copy.deepcopy(self.headers)
+            headers.update({
+                "XSRF-TOKEN": matcher[0],
+                "X-Requested-With": "XMLHttpRequest",
+                "Sec-Fetch-Mode": "cors",
+                "MWeibo-Pwa": "1",
+                "Referer": "https://m.weibo.cn/detail/{}".format(self._id),
+            })
+
+            for comment in comments:
+                comments_item = CommentsItem()
+                field_map = {
+                    # 'created_at': 'created_at',  # Sun May 17 16:38:17 +0800 2020
+                    'comment_id': 'id',
+                    'rootidstr': 'rootidstr',
+                    'floor_number': 'floor_number',
+                    'content': 'text',
+                    'disable_reply': 'disable_reply',
+                    'mid': 'mid',
+                    'max_id': 'max_id',
+                    'total_number': 'total_number',
+                    'isAuthorLiked': 'isLikedByMblogAuthor',
+                    'like_count': 'like_count',
+                }
+                for field, attr in field_map.items():
+                    comments_item[field] = comment.get(attr)
+                comments_item['created_at'] = self.format_time(comment.get("created_at"))
+                comments_item['user_id'] = comment.get("user").get("id")
+                comments_item['user_name'] = comment.get("user").get("screen_name")
+                yield comments_item
+
+                # 楼中楼,进一步爬取
+                if comments_item["total_number"]>0:
+                    yield Request(
+                        url=self.child_url.format(cid=comments_item["comment_id"], max_id=0, max_id_type=0),
+                        callback=self.parse_child,
+                        headers=headers,
+                        meta={"cid": copy.deepcopy(comments_item["comment_id"])}
+                    )
+
+            # if result.get("data").get("max_id_type")==0:
+            print("1-继续请求下一页")
             yield Request(
-                url=self.comment_url.format(id=self._id, max_id_type=self.max_id_type, mid=self.mid)+"&max_id={}".format(datas["data"]["max_id"]),
+                url=self.comment_url.format(id=self._id, max_id_type=result.get("data").get("max_id_type"), mid=self.mid)+"&max_id={}".format(result["data"]["max_id"]),
                 callback=self.parse_comment,
                 headers=headers,
-                cookies=self.cookies,
+                meta={"cid": copy.deepcopy(max_id)}
+            )
+
+    def parse_child(self, response):
+        result = json.loads(response.text)
+        if result.get("ok")==1 and result.get("data"):
+            comments = result.get("data")
+            max_id = result.get("max_id")
+            max_id_type = result.get("max_id_type")
+            for comment in comments:
+                comments_item = CommentsItem()
+                field_map = {
+                    'comment_id': 'id',
+                    'rootidstr': 'rootidstr',
+                    'floor_number': 'floor_number',
+                    'content': 'text',
+                    'disable_reply': 'disable_reply',
+                    'mid': 'mid',
+                    'max_id': 'max_id',
+                    'like_count': 'like_count',
+                }
+                for field, attr in field_map.items():
+                    comments_item[field] = comment.get(attr)
+                comments_item['created_at'] = self.format_time(comment.get("created_at"))
+                comments_item['user_id'] = comment.get("user").get("id")
+                comments_item['user_name'] = comment.get("user").get("screen_name")
+                comments_item['max_id'] = max_id
+                yield comments_item
+
+            # 继续下一页
+            print("2-child继续请求下一页")
+            headers = copy.deepcopy(self.headers)
+            matcher = re.findall('(?<=XSRF-TOKEN=)[0-9a-zA-Z]{6,}(?=;)', str(response.headers).replace("XSRF-TOKEN=deleted", ""))
+            headers.update({
+                "XSRF-TOKEN": matcher[0],
+                "X-Requested-With": "XMLHttpRequest",
+                "Sec-Fetch-Mode": "cors",
+                "MWeibo-Pwa": "1",
+                "Referer": "https://m.weibo.cn/detail/{}".format(self._id),
+            })
+            yield Request(
+                url=self.child_url.format(cid=copy.deepcopy(response.meta["cid"]), max_id=max_id, max_id_type=max_id_type),
+                callback=self.parse_child,
+                headers=headers,
+                meta={"cid": copy.deepcopy(max_id)}
             )
         pass
 
-    pass
-
-
-
+    @classmethod
+    def format_time(cls, date_str):
+        """
+        处理评论时间
+        :param date_str:
+        :return:
+        """
+        GMT_FORMAT = "%a %b %d %H:%M:%S +0800 %Y"
+        return datetime.datetime.strptime(date_str, GMT_FORMAT)
 
 
 

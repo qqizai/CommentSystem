@@ -9,18 +9,35 @@ import scrapy
 from scrapy import Item, Field
 
 
-class CommentsystemItem(scrapy.Item):
-    pass
-    # define the fields for your item here like:
-    # name = scrapy.Field()
+class CommentsItem(Item):
+    table = "comments"
+
+    id = Field()
+    comment_id = Field()
+    user_id = Field()
+    user_name = Field()  # screen_name
+    created_at = Field()
+    rootidstr = Field()
+    floor_number = Field()
+    content = Field()
+    disable_reply = Field()  # 是否关闭评论？
+    mid = Field()
+    max_id = Field()
+    total_number = Field()  # 本条评论下有多少条回复
+    isAuthorLiked = Field()  # 楼主是否点赞
+    like_count = Field()
+    crawled_at = Field()
 
 
 class UserItem(Item):
+    # collection是MongoDB的用法
     collection = 'users'
+    # table是MySQL的用法
+    # table = "users"  # 可用同时写：collection = table = 'users'
 
     id = Field()
     name = Field()
-    avatar = Field()
+    avatar = Field()  # 头像
     cover = Field()
     gender = Field()
     description = Field()

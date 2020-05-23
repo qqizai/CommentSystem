@@ -22,12 +22,12 @@ NEWSPIDER_MODULE = 'CommentSystem.spiders'
 ROBOTSTXT_OBEY = False
 
 # Configure maximum concurrent requests performed by Scrapy (default: 16)
-#CONCURRENT_REQUESTS = 32
+CONCURRENT_REQUESTS = 2
 
 # Configure a delay for requests for the same website (default: 0)
 # See https://doc.scrapy.org/en/latest/topics/settings.html#download-delay
 # See also autothrottle settings and docs
-DOWNLOAD_DELAY = 2
+DOWNLOAD_DELAY = 15
 # The download delay setting will honor only one of:
 #CONCURRENT_REQUESTS_PER_DOMAIN = 16
 #CONCURRENT_REQUESTS_PER_IP = 16
@@ -59,7 +59,7 @@ DEFAULT_REQUEST_HEADERS = {
 # See https://doc.scrapy.org/en/latest/topics/downloader-middleware.html
 DOWNLOADER_MIDDLEWARES = {
     'CommentSystem.middlewares.CommentsystemDownloaderMiddleware': 543,
-    # 'CommentSystem.middlewares.CookiesMiddleware': 554,
+    'CommentSystem.middlewares.CookiesMiddleware': 554,
     # 'CommentSystem.middlewares.ProxyMiddleware': 555,
 }
 
@@ -72,11 +72,11 @@ DOWNLOADER_MIDDLEWARES = {
 # Configure item pipelines
 # See https://doc.scrapy.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
-   'CommentSystem.pipelines.CommentsystemPipeline': 300,
-
+   # 'CommentSystem.pipelines.CommentsystemPipeline': 300,
    'CommentSystem.pipelines.TimePipeline': 300,
    'CommentSystem.pipelines.WeiboPipeline': 301,
    'CommentSystem.pipelines.MongoPipeline': 302,
+   'CommentSystem.pipelines.MysqlPipeline': 303,
 }
 
 # Enable and configure the AutoThrottle extension (disabled by default)
@@ -104,11 +104,20 @@ ITEM_PIPELINES = {
 MONGO_URI = "localhost"
 MONGO_DATABASE = "weibo"
 
+MYSQL_HOST = "localhost"
+MYSQL_DATABASE = "weibo"
+MYSQL_USER = "root"
+MYSQL_PASSWORD = ""
+MYSQL_PORT = 3306
+
+
 COOKIES_URL = "http://localhost:5000/weibo/random"
 
 PROXY_URL = "http://localhost:5000/random"
 
 # 设置重试code
 RETRY_HTTP_CODES = [401, 403, 408, 414, 500, 502, 503, 504]
+
+
 
 
