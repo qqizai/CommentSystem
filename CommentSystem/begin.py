@@ -17,4 +17,5 @@ from scrapy.cmdline import execute
 root_path = pathlib.Path(__file__).parent.parent
 sys.path.append(root_path)
 
-execute("scrapy crawl weibo_comment".split(" "))
+# execute("scrapy crawl weibo_comment".split(" "))
+execute("scrapy crawl weibo_user".split(" "))

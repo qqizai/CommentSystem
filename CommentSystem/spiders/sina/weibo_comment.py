@@ -25,12 +25,12 @@ class SinaWeiBoSpider(Spider):
 
     comment_url = "https://m.weibo.cn/comments/hotflow?id={id}&mid={mid}&max_id_type={max_id_type}"  # max_id={max_id}&
     child_url = "https://m.weibo.cn/comments/hotFlowChild?cid={cid}&max_id={max_id}&max_id_type={max_id_type}"
-    total = 0
-
-    _id = "4505609644905372"
-    mid = "4505609644905372"
+    _id = "4506585282309521"  # 4505609644905372
+    mid = "4506585282309521"
     max_id_type = 0
+    weibo_url = "https://m.weibo.cn/detail/".format(_id)
 
+    total = 0
     headers = {
         "User-Agent": "Mozilla/5.0 (Linux; Android 5.1.1; nxt-al10 Build/LYZ28N) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/39.0.0.0 Mobile Safari/537.36 sinablog-android/5.3.2 (Android 5.1.1; zh_CN; huawei nxt-al10/nxt-al10)",
         "Content-Type": "application/x-www-form-urlencoded; charset=utf-8",
@@ -74,6 +74,7 @@ class SinaWeiBoSpider(Spider):
 
             for comment in comments:
                 comments_item = CommentsItem()
+                comments_item["weibo_url"] = self.weibo_url
                 field_map = {
                     # 'created_at': 'created_at',  # Sun May 17 16:38:17 +0800 2020
                     'comment_id': 'id',
@@ -120,6 +121,7 @@ class SinaWeiBoSpider(Spider):
             max_id_type = result.get("max_id_type")
             for comment in comments:
                 comments_item = CommentsItem()
+                comments_item["weibo_url"] = self.weibo_url
                 field_map = {
                     'comment_id': 'id',
                     'rootidstr': 'rootidstr',

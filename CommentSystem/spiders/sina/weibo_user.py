@@ -13,7 +13,7 @@ from CommentSystem.items import UserRelationItem, UserItem, WeiboItem
 
 
 class WeiboSpider(Spider):
-    name = 'weibocn'
+    name = 'weibo_user'
     
     allowed_domains = ['m.weibo.cn']
     

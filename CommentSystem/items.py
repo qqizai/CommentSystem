@@ -13,6 +13,7 @@ class CommentsItem(Item):
     table = "comments"
 
     id = Field()
+    weibo_url = Field()
     comment_id = Field()
     user_id = Field()
     user_name = Field()  # screen_name
@@ -31,7 +32,7 @@ class CommentsItem(Item):
 
 class UserItem(Item):
     # collection是MongoDB的用法
-    collection = 'users'
+    table = collection = 'users'
     # table是MySQL的用法
     # table = "users"  # 可用同时写：collection = table = 'users'
 
@@ -53,7 +54,8 @@ class UserItem(Item):
 
 
 class UserRelationItem(Item):
-    collection = 'users'
+    # collection = 'users'
+    table = collection = 'user_relations'
 
     id = Field()
     follows = Field()
@@ -61,7 +63,7 @@ class UserRelationItem(Item):
 
 
 class WeiboItem(Item):
-    collection = 'weibos'
+    table = collection = 'weibos'
 
     id = Field()
     attitudes_count = Field()

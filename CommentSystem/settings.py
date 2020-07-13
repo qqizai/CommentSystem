@@ -22,12 +22,12 @@ NEWSPIDER_MODULE = 'CommentSystem.spiders'
 ROBOTSTXT_OBEY = False
 
 # Configure maximum concurrent requests performed by Scrapy (default: 16)
-CONCURRENT_REQUESTS = 2
+CONCURRENT_REQUESTS = 16
 
 # Configure a delay for requests for the same website (default: 0)
 # See https://doc.scrapy.org/en/latest/topics/settings.html#download-delay
 # See also autothrottle settings and docs
-DOWNLOAD_DELAY = 15
+DOWNLOAD_DELAY = 3
 # The download delay setting will honor only one of:
 #CONCURRENT_REQUESTS_PER_DOMAIN = 16
 #CONCURRENT_REQUESTS_PER_IP = 16
@@ -76,7 +76,7 @@ ITEM_PIPELINES = {
    'CommentSystem.pipelines.TimePipeline': 300,
    'CommentSystem.pipelines.WeiboPipeline': 301,
    'CommentSystem.pipelines.MongoPipeline': 302,
-   'CommentSystem.pipelines.MysqlPipeline': 303,
+   # 'CommentSystem.pipelines.MysqlPipeline': 303,
 }
 
 # Enable and configure the AutoThrottle extension (disabled by default)
